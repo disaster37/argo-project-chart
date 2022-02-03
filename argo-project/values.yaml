@@ -1,0 +1,10 @@
+rancherProjectId: ""
+rancherClusterId: ""
+namespaces: {}
+#  name:
+#    labels: {}
+#    annotations: {}
+secrets: {}
+configMaps: {}
+pvcs: {}
+services: {}

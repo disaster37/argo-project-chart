@@ -1,0 +1,42 @@
+rancherProjectId: "fu"
+rancherClusterId: "bar"
+namespaces:
+  test:
+    labels:
+      label1: value1
+    annotations:
+      anno1: value1
+secrets:
+  test:
+    vaultPath: test
+    labels:
+      label1: value1
+    annotations:
+      anno1: value1
+    data:
+      secret1: value1
+configMaps:
+  test:
+    labels:
+      label1: value1
+    annotations:
+      anno1: value1
+    data:
+      config1: value1
+services:
+  test:
+    labels:
+      label1: value1
+    annotations:
+      anno1: value1
+  spec:
+    ports:
+      - name: http
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      app.kubernetes.io/component: test
+      app.kubernetes.io/instance: test
+    sessionAffinity: None
+    type: ClusterIP
