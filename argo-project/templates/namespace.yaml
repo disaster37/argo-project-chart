@@ -4,15 +4,14 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  {{- if or ( and $rancherProjectId $rancherClusterId ) $config.annotations }}
   annotations:
+    argocd.argoproj.io/sync-wave: "-10"
     {{- if and $rancherProjectId $rancherClusterId }}
     field.cattle.io/projectId: {{ $rancherClusterId }}:{{ $rancherProjectId }}
     {{- end }}
     {{- if $config.annotations }}
 {{ toYaml $config.annotations | indent 4 }}
     {{- end }}
-  {{- end }}
   {{- if or $rancherProjectId $config.labels }}
   labels:
     {{- if $rancherProjectId }}

@@ -38,7 +38,7 @@ jobs:
 
       - name: Install chart
         run: |
-          helm install argo-project argo-project/ -n test -f argo-project/examples/values-all.yaml --wait
+          helm install argo-project argo-project/ -n default -f argo-project/examples/values-all.yaml --wait
 
   publish-pr:
     needs: [lint-test]
