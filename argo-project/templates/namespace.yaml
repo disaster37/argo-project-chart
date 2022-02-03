@@ -1,20 +1,22 @@
-{{- range $name, $config := .Values.namespace }}
+{{- $rancherClusterId := .Values.rancherClusterId }}
+{{- $rancherProjectId := .Values.rancherProjectId }}
+{{- range $name, $config := .Values.namespaces }}
 apiVersion: v1
 kind: Namespace
 metadata:
-  {{- if or ( and .Values.rancherProjectId .Values.rancherClusterId) $config.annotations }}
+  {{- if or ( and $rancherProjectId $rancherClusterId ) $config.annotations }}
   annotations:
-    {{- if and .Values.rancherProjectId .Values.rancherClusterId }}
-    field.cattle.io/projectId: {{ .Values.rancherClusterId }}:{{ .Values.rancherProjectId }}
+    {{- if and $rancherProjectId $rancherClusterId }}
+    field.cattle.io/projectId: {{ $rancherClusterId }}:{{ $rancherProjectId }}
     {{- end }}
     {{- if $config.annotations }}
 {{ toYaml $config.annotations | indent 4 }}
     {{- end }}
   {{- end }}
-  {{- if or .Values.rancherProjectId $config.labels }}
+  {{- if or $rancherProjectId $config.labels }}
   labels:
-    {{- if .Values.rancherProjectId }}
-    field.cattle.io/projectId: {{ .Values.rancherProjectId }}
+    {{- if $rancherProjectId }}
+    field.cattle.io/projectId: {{ $rancherProjectId }}
     {{- end }}
     {{- if $config.labels }}
 {{ toYaml $config.labels | indent 4 }}
