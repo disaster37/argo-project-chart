@@ -31,7 +31,7 @@ jobs:
           python-version: 3.7
       
       - name: Lint chart
-        run: helm lint
+        run: helm lint argo-project/
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.2.0
