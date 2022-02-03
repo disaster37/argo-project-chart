@@ -1,5 +1,6 @@
 rancherProjectId: ""
 rancherClusterId: ""
+argocdNamespace: "argocd"
 namespaces: {}
 #  name:
 #    labels: {}
@@ -8,3 +9,5 @@ secrets: {}
 configMaps: {}
 pvcs: {}
 services: {}
+applications: {}
+monitorings: {}

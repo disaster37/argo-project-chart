@@ -1,0 +1,16 @@
+{{- range $name, $config := .Values.monitorings }}
+apiVersion: monitor.k8s.webcenter.fr/v1alpha1
+kind: CentreonService
+metadata:
+  name: {{ $name }}
+  {{- if $config.annotations }}
+  annotations:
+{{ toYaml $config.annotations | indent 4 }}
+  {{- end }}
+  {{- if $config.labels }}
+  labels:
+{{ toYaml $config.labels | indent 4 }}
+  {{- end }}
+spec:
+{{ toYaml $config.spec | indent 2 }}
+{{- end }}

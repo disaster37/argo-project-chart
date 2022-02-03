@@ -1,0 +1,20 @@
+{{- $argocdNamespace := .Values.argocdNamespace }}
+{{- range $name, $config := .Values.applications }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $name }}
+  namespace: {{ $argocdNamespace }}
+  {{- if $config.annotations }}
+  annotations:
+{{ toYaml $config.annotations | indent 4 }}
+  {{- end }}
+  {{- if $config.labels }}
+  labels:
+{{ toYaml $config.labels | indent 4 }}
+  {{- end }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+{{ toYaml $config.spec | indent 2 }}
+{{- end }}
