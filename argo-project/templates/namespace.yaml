@@ -1,6 +1,7 @@
 {{- $rancherClusterId := .Values.rancherClusterId }}
 {{- $rancherProjectId := .Values.rancherProjectId }}
 {{- range $name, $config := .Values.namespaces }}
+---
 apiVersion: v1
 kind: Namespace
 metadata:

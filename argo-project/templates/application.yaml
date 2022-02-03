@@ -1,5 +1,6 @@
 {{- $argocdNamespace := .Values.argocdNamespace }}
 {{- range $name, $config := .Values.applications }}
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:

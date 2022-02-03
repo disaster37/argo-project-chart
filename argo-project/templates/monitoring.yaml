@@ -1,4 +1,5 @@
 {{- range $name, $config := .Values.monitorings }}
+---
 apiVersion: monitor.k8s.webcenter.fr/v1alpha1
 kind: CentreonService
 metadata:
