@@ -72,4 +72,6 @@ Common namespaceResourceBlacklist:
   kind: LimitRange
 - group: ''
   kind: NetworkPolicy
+- group: 'apps'
+  kind: DaemonSet
 {{- end }}
