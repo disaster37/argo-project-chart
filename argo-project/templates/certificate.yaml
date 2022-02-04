@@ -1,0 +1,24 @@
+{{- range $name, $config := .Values.certificates }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ $name }}
+  {{- if or $config.annotations $config.vaultPath }}
+  annotations:
+    {{- if $config.vaultPath }}
+    avp.kubernetes.io/path: {{ $config.vaultPath }}
+    {{- end }}
+    {{- if $config.annotations }}
+{{ toYaml $config.annotations | indent 4 }}
+    {{- end }}
+  {{- end }}
+  {{- if $config.labels }}
+  labels:
+{{ toYaml $config.labels | indent 4 }}
+  {{- end }}
+type: Opaque
+data:
+  tls.crt: {{ $config.data.crt | b64enc }}
+  tls.key: {{ $config.data.key | b64enc }}
+{{- end }}
