@@ -5,7 +5,7 @@ kind: Namespace
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-10"
-    {{ - if $config.quota }}
+    {{- if $config.quota }}
     field.cattle.io/resourceQuota: '{"limit":{"limitsCpu":"{{ $config.quota.cpu }}","limitsMemory":"{{ $config.quota.memory }}","requestsStorage":"{{ $config.quota.storage }}"}}'
     {{- end }}
     {{- if and $config.rancherProjectId $config.rancherClusterId }}
