@@ -16,6 +16,13 @@ secrets:
       anno1: value1
     data:
       secret1: value1
+  regcred:
+    vaultPath: test
+    type: kubernetes.io/dockerconfigjson
+    data:
+      registry: registry
+      username: admin
+      password: my-password
 configMaps:
   test:
     labels:
