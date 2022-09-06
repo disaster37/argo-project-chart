@@ -23,5 +23,9 @@ metadata:
 {{ toYaml $config.labels | indent 4 }}
     {{- end }}
   {{- end }}
+  {{- if eq $name "current"}}
+  name: {{ .Release.Namespace }}
+  {{- else }}
   name: {{ $name }}
+  {{- end }}
 {{- end }}
