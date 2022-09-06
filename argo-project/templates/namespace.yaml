@@ -1,5 +1,3 @@
-{{- $rancherClusterId := .Values.rancherClusterId }}
-{{- $rancherProjectId := .Values.rancherProjectId }}
 {{- range $name, $config := .Values.namespaces }}
 ---
 apiVersion: v1
@@ -7,16 +5,19 @@ kind: Namespace
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-10"
-    {{- if and $rancherProjectId $rancherClusterId }}
-    field.cattle.io/projectId: {{ $rancherClusterId }}:{{ $rancherProjectId }}
+    {{ - if $config.quota }}
+    field.cattle.io/resourceQuota: '{"limit":{"limitsCpu":"{{ $config.quota.cpu }}","limitsMemory":"{{ $config.quota.memory }}","requestsStorage":"{{ $config.quota.storage }}"}}'
+    {{- end }}
+    {{- if and $config.rancherProjectId $config.rancherClusterId }}
+    field.cattle.io/projectId: {{ $config.rancherClusterId }}:{{ $config.rancherProjectId }}
     {{- end }}
     {{- if $config.annotations }}
 {{ toYaml $config.annotations | indent 4 }}
     {{- end }}
-  {{- if or $rancherProjectId $config.labels }}
+  {{- if or $config.rancherProjectId $config.labels }}
   labels:
-    {{- if $rancherProjectId }}
-    field.cattle.io/projectId: {{ $rancherProjectId }}
+    {{- if $config.rancherProjectId }}
+    field.cattle.io/projectId: {{ $config.rancherProjectId }}
     {{- end }}
     {{- if $config.labels }}
 {{ toYaml $config.labels | indent 4 }}
