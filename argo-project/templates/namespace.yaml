@@ -1,3 +1,4 @@
+{{- $namespace := .Release.Namespace -}}
 {{- range $name, $config := .Values.namespaces }}
 ---
 apiVersion: v1
@@ -24,7 +25,7 @@ metadata:
     {{- end }}
   {{- end }}
   {{- if eq $name "current"}}
-  name: {{ .Release.Namespace }}
+  name: {{ $namespace }}
   {{- else }}
   name: {{ $name }}
   {{- end }}
