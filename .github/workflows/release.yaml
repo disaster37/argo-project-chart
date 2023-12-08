@@ -51,7 +51,7 @@ jobs:
           #!/bin/sh
           cd argo-project
           sed -iE 's/version:(.*)/version: \1-pr{{ github.event.issue.id }}/g' Chart.yaml
-      - uses: bsord/helm-push@4.1.0
+      - uses: bsord/helm-push@v4.1.0
         with:
           useOCIRegistry: true
           registry-url:  oci://ghcr.io/${{ github.repository }}
@@ -66,7 +66,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/checkout@v2
-      - uses: bsord/helm-push@4.1.0
+      - uses: bsord/helm-push@v4.1.0
         with:
           useOCIRegistry: true
           registry-url:  oci://ghcr.io/${{ github.repository }}
