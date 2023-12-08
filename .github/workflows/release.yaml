@@ -24,7 +24,7 @@ jobs:
       - name: Set up Helm
         uses: azure/setup-helm@v1
         with:
-          version: v3.4.0
+          version: v3.13.2
       
       - uses: actions/setup-python@v2
         with:
@@ -51,15 +51,14 @@ jobs:
           #!/bin/sh
           cd argo-project
           sed -iE 's/version:(.*)/version: \1-pr{{ github.event.issue.id }}/g' Chart.yaml
-        
-      - uses: goodsmileduck/helm-push-action@v3.3.1
-        env:
-          SOURCE_DIR: '.'
-          CHART_FOLDER: 'argo-project'
-          FORCE: 'True'
-          CHARTMUSEUM_URL: 'https://charts.webcenter.fr'
-          CHARTMUSEUM_USER: '${{ secrets.CHARTMUSEUM_USER }}'
-          CHARTMUSEUM_PASSWORD: ${{ secrets.CHARTMUSEUM_PASSWORD }}
+      - uses: bsord/helm-push@4.2.0
+        with:
+          useOCIRegistry: true
+          registry-url:  oci://ghcr.io/${{ github.repository }}
+          username: disaster37
+          access-token: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
+          force: true
+          chart-folder: argo-project
 
   publish:
     needs: [lint-test]
@@ -67,14 +66,14 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/checkout@v2
-      - uses: goodsmileduck/helm-push-action@v3.3.1
-        env:
-          SOURCE_DIR: '.'
-          CHART_FOLDER: 'argo-project'
-          FORCE: 'True'
-          CHARTMUSEUM_URL: 'https://charts.webcenter.fr'
-          CHARTMUSEUM_USER: '${{ secrets.CHARTMUSEUM_USER }}'
-          CHARTMUSEUM_PASSWORD: ${{ secrets.CHARTMUSEUM_PASSWORD }}
+      - uses: bsord/helm-push@4.2.0
+        with:
+          useOCIRegistry: true
+          registry-url:  oci://ghcr.io/${{ github.repository }}
+          username: disaster37
+          access-token: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
+          force: true
+          chart-folder: argo-project
       
 
 
