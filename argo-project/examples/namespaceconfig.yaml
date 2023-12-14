@@ -1,0 +1,21 @@
+vaultPath: 'thevaultpath'
+environment: dev
+endpoint: theendpoint
+namespaceConfigs:
+  spark-history-server:
+    vaultPath: '{{ .Values.vaultPath }}'
+    labelSelector:
+      spark.harmonie-mutuelle.fr/hms: 'true'
+      environment: '{{ .Values.environment }}'
+    templates:
+      - objectTemplate: |
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: spark-history-server-credentials
+          type: Opaque
+          data:
+            SHS_S3_BUCKET: {{ "<spark-hs_s3_bucket>" | b64enc }}
+            SHS_S3_ACCESS_KEY: {{ "<spark-hs_s3_access_key>" | b64enc }}
+            SHS_S3_SECRET_KEY: {{ "<spark-hs_s3_secret_key>" | b64enc }}
+            SHS_S3_ENDPOINT: '{{ .Values.endpoint | b64enc }}''

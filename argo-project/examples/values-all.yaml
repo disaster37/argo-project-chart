@@ -8,7 +8,7 @@ namespaces:
       anno1: value1
 secrets:
   test:
-    vaultPath: test
+    vaultPath: "{{test}}"
     labels:
       label1: value1
       lebel2: value2
