@@ -21,14 +21,14 @@ metadata:
 spec:
   {{- if $config.labelSelector }}
   labelSelector:
-{{ toYaml $config.labelSelector | indent 4 }}
+{{ tpl ($config.labelSelector | toYaml) . | indent 4 }}
   {{- end }}
   {{- if $config.annotationSelector }}
   annotationSelector:
-{{ toYaml $config.annotationSelector | indent 4 }}
+{{ tpl ($config.annotationSelector | toYaml) . | indent 4 }}
   {{- end }}
   templates:
   {{- range $data := $config.objectTemplates }}
-    - objectTemplate: {{ $data }}
+    - objectTemplate: {{tpl $data . }}
   {{- end}}
 {{- end }}
