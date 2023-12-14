@@ -1,0 +1,34 @@
+{{- range $name, $config := .Values.namespaceConfigs }}
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: NamespaceConfig
+metadata:
+  name: spark-history-server
+  name: {{ $name }}
+  {{- if or $config.annotations $config.vaultPath }}
+  annotations:
+    {{- if $config.vaultPath }}
+    avp.kubernetes.io/path: {{ tpl $config.vaultPath . }}
+    {{- end }}
+    {{- if $config.annotations }}
+{{ toYaml $config.annotations | indent 4 }}
+    {{- end }}
+  {{- end }}
+  {{- if $config.labels }}
+  labels:
+{{ toYaml $config.labels | indent 4 }}
+  {{- end }}
+spec:
+  {{- if $config.labelSelector }}
+  labelSelector:
+{{ toYaml $config.labelSelector | indent 4 }}
+  {{- end }}
+  {{- if $config.annotationSelector }}
+  annotationSelector:
+{{ toYaml $config.annotationSelector | indent 4 }}
+  {{- end }}
+  templates:
+  {{- range $data := $config.objectTemplates }}
+    - objectTemplate: {{ $data }}
+  {{- end}}
+{{- end }}
