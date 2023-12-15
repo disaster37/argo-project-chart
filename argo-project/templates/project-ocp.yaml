@@ -1,0 +1,72 @@
+{{- $namespace := .Release.Namespace -}}
+{{- range $name, $config := .Values.ocpProjects }}
+---
+apiVersion: project.openshift.io/v1
+kind: Project
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+    {{- if $config.annotations }}
+{{ toYaml $config.annotations | indent 4 }}
+    {{- end }}
+  {{- if $config.labels }}
+  labels:
+{{ toYaml $config.labels | indent 4 }}
+  {{- end }}
+  name: {{ $name }}
+  {{- if or $config.quota $config.limit }}
+  spec:
+    projectRequestTemplate:
+      name: {{ $name }}
+  {{- end }}
+
+{{- if or $config.quota $config.limit }}
+---
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: {{ $name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-11"
+  {{- if $config.annotations }}
+{{ toYaml $config.annotations | indent 4 }}
+  {{- end }}
+  {{- if $config.labels }}
+  labels:
+{{ toYaml $config.labels | indent 4 }}
+  {{- end }}
+objects:
+  {{- if $config.quota }}
+  - apiVersion: v1
+    kind: ResourceQuota
+    metadata:
+      name: default-quotas
+    spec:
+      hard:
+        {{- if $config.quota.cpu }}
+        limits.cpu: {{ $config.quota.cpu }}
+        {{- end }}
+        {{- if $config.quota.memory }}
+        limits.memory: {{ $config.quota.memory }}
+        {{- end }}
+        {{- if $config.quota.storage }}
+        requests.storage: {{ $config.quota.storage }}
+        {{- end }}
+  {{- end }}
+  {{- if $config.limit }}
+  - apiVersion: v1
+    kind: LimitRange
+    metadata:
+      name: default-limit
+    spec:
+    limits:
+      - type: Container
+        default:
+          cpu: 60m
+          memory: 60Mi
+        defaultRequest:
+          cpu: 10m
+          memory: 10Mi
+  {{- end }}
+{{- end }}
+{{- end }}

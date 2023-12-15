@@ -1,0 +1,11 @@
+ocpProjects:
+  test:
+    labels:
+      label1: values1
+    annotations:
+      ano1: values1
+    quota:
+      cpu: 2000m
+      memory: 10Gi
+      storage: 50Gi
+    limit: true
