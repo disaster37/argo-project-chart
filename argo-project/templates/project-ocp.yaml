@@ -2,7 +2,7 @@
 {{- range $name, $config := .Values.ocpProjects }}
 ---
 apiVersion: project.openshift.io/v1
-kind: ProjectRequest
+kind: Project
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-10"
