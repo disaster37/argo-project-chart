@@ -5,7 +5,7 @@ kind: ResourceQuota
 metadata:
     name: default-quotas
 spec:
-    hard:
+  hard:
     {{- if .Values.quota.cpu }}
     limits.cpu: {{ .Values.quota.cpu }}
     {{- end }}
