@@ -1,0 +1,26 @@
+{{- if .Values.limitRange }}
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+    name: default-limit
+spec:
+  limits:
+    - type: Container
+      {{- if .Values.limitRange.defaultLimit }}
+      default:
+{{ toYaml .Values.limitRange.defaultLimit | indent 8 }}
+      {{- end }}
+      {{- if .Values.limitRange.defaultRequest }}
+      defaultRequest:
+{{ toYaml .Values.limitRange.defaultRequest | indent 8 }}
+      {{- end }}
+      {{- if .Values.limitRange.min }}
+      min:
+{{ toYaml .Values.limitRange.min | indent 8 }}
+      {{- end }}
+      {{- if .Values.limitRange.max }}
+      max:
+{{ toYaml .Values.limitRange.max | indent 8 }}
+      {{- end }}
+{{- end }}

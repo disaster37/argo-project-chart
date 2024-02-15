@@ -48,3 +48,20 @@ services:
         app.kubernetes.io/instance: test
       sessionAffinity: None
       type: ClusterIP
+quota:
+  cpu: 3
+  memory: 10Gi
+  storage: 50Gi
+limitRange:
+  defaultRequest:
+    cpu: 100m
+    memory: 128Mi
+  defaultLimit:
+    cpu: 500m
+    memory: 512Mi
+  min:
+    cpu: 50m
+    memory: 64Mi
+  max:
+    cpu: 4
+    memory: 12Gi

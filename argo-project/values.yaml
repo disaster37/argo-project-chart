@@ -13,3 +13,12 @@ applications: {}
 monitorings: {}
 projects: {}
 ocpProjects: {}
+quota: {}
+#  cpu: 4
+#  memory: 12Gi
+#  storage: 50Gi
+limitRange: {}
+#  defaultRequest: {}
+#  defaultLimit: {}
+#  min: {}
+#  max: {}
