@@ -17,6 +17,11 @@ quota: {}
 #  cpu: 4
 #  memory: 12Gi
 #  storage: 50Gi
+#  pvc: 5
+#  storageClasses:
+#    standard:
+#      pvc: 10
+#      storage: 100Gi
 limitRange: {}
 #  defaultRequest: {}
 #  defaultLimit: {}

@@ -15,4 +15,15 @@ spec:
     {{- if .Values.quota.storage }}
     requests.storage: {{ .Values.quota.storage }}
     {{- end }}
+    {{- if .Values.quota.pvc }}
+    persistentvolumeclaims: {{ .Values.quota.pvc }}
+    {{- end }}
+    {{- range $sc, $scQuota := .Values.quota.storageClasses }}
+    {{- if $scQuota.pvc }}
+    {{ $sc }}.storageclass.storage.k8s.io/persistentvolumeclaims: {{ $scQuota.pvc }}
+    {{- end }}
+    {{- if $scQuota.storage }}
+    {{ $sc }}.storageclass.storage.k8s.io/requests.storage: {{ $scQuota.storage }}
+    {{- end }}
+    {{- end }}
 {{- end }}
